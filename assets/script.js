@@ -15,6 +15,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const taskItem = document.createElement("li");
         taskItem.innerText = taskText;
         taskList.appendChild(taskItem);
+        localStorage.setItem("task", taskText);
+        taskInput.value = "";
+    });
+
+    taskInput.addEventListener('keypress', (e) => {
+        if (e.key === "Enter") {
+            taskBtn.click();
+            console.log("Enter key pressed");
+        }
+    });
+
+    urgentCheck.addEventListener("click", () => {
+        
     });
 });
 
