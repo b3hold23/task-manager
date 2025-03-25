@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const taskList = document.getElementById("taskList");
     const taskBtn = document.getElementById("taskBtn");
     const taskClear = document.getElementById("clearTskBtn");
+    const urgent = document.getElementById("urgentCheck");
     
     
     //When the Add Task button is clicked, the task text is added to the list and saved to local storage
@@ -65,6 +66,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     taskList.addEventListener("click", doneTask);//This listens for a click on the task list and runs the doneTask function
 
+    //When a task is double clicked, it is removed from the list and local storage
+    const removeTask = (e) => {
+    e.target.remove();//Removes the task from the list
+    localStorage.clear();//Clears the task from local storage
+    };
+
+    taskList.addEventListener('dblclick', removeTask);//This listens for a double click on the task list and runs the removeTask function
 });
 
 
