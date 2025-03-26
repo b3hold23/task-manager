@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const taskList = document.getElementById("taskList");
     const taskBtn = document.getElementById("taskBtn");
     const taskClear = document.getElementById("clearTskBtn");
-    const urgent = document.getElementById("urgentCheck");
+    const urgent = document.getElementById("urgentTask");
     
     
     //When the Add Task button is clicked, the task text is added to the list and saved to local storage
@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         addTask(taskText); //Runs the addTask function
         saveTask(taskText); //Runs the saveTask function
+        urgentTask(taskText); //Runs the urgentTask function
         taskInput.value = ""; //Clears the input field
         
     });
@@ -32,9 +33,15 @@ document.addEventListener("DOMContentLoaded", () => {
     
     const addTask = (taskText) => {
         const taskItem = document.createElement("button"); //creates Element
-        taskItem.classList.add("btn", "btn-info", "mt-1"); //adds class to the new element 
+        taskItem.classList.add("btn", "btn-info", "mt-1",); //adds class to the new element 
         taskItem.innerText = taskText; //Adds the task text to the new element
         taskList.appendChild(taskItem); //Adds the new element into the list with the id taskList
+
+
+        const urgentTask = document.createElement("button");
+        urgentTask.classList.add("btn", "btn-outline-warning", "mt-1");
+        urgentTask.innerText = "Urgent";
+        urgent.appendChild(urgentTask);
     }
     
     const  saveTask = (taskText) => {
@@ -55,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
         taskInput.value = ""; //Clears the input field
         localStorage.clear(); //Clears local storage
         taskList.remove(); //Clears the list
+        urgentTask.remove();
     });
 
     //When a task is clicked, it is marked as complete and changes color to green
