@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const taskList = document.getElementById("taskList");
     const taskBtn = document.getElementById("taskBtn");
     const taskClear = document.getElementById("clearTskBtn");
-    const urgent = document.getElementById("urgentTask");
     
     
     //When the Add Task button is clicked, the task text is added to the list and saved to local storage
@@ -16,7 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
         
         addTask(taskText); //Runs the addTask function
         saveTask(taskText); //Runs the saveTask function
-        urgentTask(taskText); //Runs the urgentTask function
         taskInput.value = ""; //Clears the input field
         
     });
@@ -32,16 +30,29 @@ document.addEventListener("DOMContentLoaded", () => {
     
     
     const addTask = (taskText) => {
-        const taskItem = document.createElement("button"); //creates Element
-        taskItem.classList.add("btn", "btn-info", "mt-1",); //adds class to the new element 
-        taskItem.innerText = taskText; //Adds the task text to the new element
-        taskList.appendChild(taskItem); //Adds the new element into the list with the id taskList
+      const taskWrap = document.createElement("div");
+      taskWrap.classList.add('container','text-center' );
+
+      const taskItem = document.createElement('button');
+      taskItem.classList.add('col-md-8', 'btn', 'btn-info', 'mb-2', 'mx-3');
+      taskItem.innerText = taskText;
+
+      const urgentTask = document.createElement('button');
+      urgentTask.classList.add("col-md-2", 'btn', 'btn-outline-warning', 'mb-2', 'mx-3');
+      urgentTask.innerText = "Urgent";
+
+      urgentTask.addEventListener("click", () => {
+        taskItem.classList.toggle("btn-danger");
+        taskItem.classList.toggle("btn-info");
+        urgentTask.classList.toggle("btn-outline-warning");
+        urgentTask.classList.toggle("btn-warning");
+      });
+
+      taskWrap.appendChild(taskItem);
+      taskWrap.appendChild(urgentTask);
+      taskList.appendChild(taskWrap);
 
 
-        const urgentTask = document.createElement("button");
-        urgentTask.classList.add("btn", "btn-outline-warning", "mt-1");
-        urgentTask.innerText = "Urgent";
-        urgent.appendChild(urgentTask);
     }
     
     const  saveTask = (taskText) => {
@@ -76,7 +87,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //When a task is double clicked, it is removed from the list and local storage
     const removeTask = (e) => {
-    e.target.remove();//Removes the task from the list
+    if (e.target.tagName === "BUTTON") {
+        e.target.parentElement.remove();
+        console.log("Task removed", `${e.target.innerText}`);
+    }//Removes the task from the list
     localStorage.clear();//Clears the task from local storage
     };
 
